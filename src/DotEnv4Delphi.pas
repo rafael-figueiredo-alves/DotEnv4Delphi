@@ -3,13 +3,19 @@ unit DotEnv4Delphi;
 interface
 
 type
-  TEnvVar = (ALLUSERSPROFILE, APPDATA, CLIENTNAME, COMMONPROGRAMFILES);
+  TEnvVar = (ALLUSERSPROFILE, APPDATA, CLIENTNAME, COMMONPROGRAMFILES, COMPUTERNAME, COMSPEC, HOMEDRIVE, HOMEPATH, LOGONSERVER,
+             NUMBER_OF_PROCESSORS, OS, PATH, PATHEXT, PROCESSOR_ARCHITECTURE, PROCESSOR_IDENTIFIER, PROCESSOR_LEVEL,
+             PROCESSOR_REVISION, PROGRAMFILES, SESSIONNAME, SYSTEMDRIVE, SYSTEMROOT, TEMP, TMP, USERDOMAIN, USERNAME, USERPROFILE,
+             WINDIR, DB_USERNAME, DBUSERNAME, DBPORT, DB_PORT, PORT, HOSTNAME, DB_HOST, DB_USER, DBHOST, DBUSER, DBPASS, DB_PASS,
+             PASSWORD, DBPASSWORD, BASE_URL, TOKEN, API_TOKEN);
 
   TDotEnv4Delphi = class
-    class function GetVar(const name: string; fromDotEnvFile: Boolean = False): string; overload;
-    class function GetVar(const EnvVar: TEnvVar; fromDotEnvFile: Boolean = False): string; overload;
+    class function Env(const name: string; fromDotEnvFile: Boolean = False): string; overload;
+    class function Env(const EnvVar: TEnvVar; fromDotEnvFile: Boolean = False): string; overload;
     class function GetVersion: string;
   end;
+
+  DotEnv = TDotEnv4Delphi;
 
 implementation
 
@@ -36,7 +42,8 @@ var
       fFile.LoadFromFile(EnvFile);
       for position := 0 to fFile.Count - 1 do
        begin
-         Dict.Add(fFile.Names[position].ToUpper, fFile.Values[fFile.Names[position]]);
+         if not (fFile.Names[position].ToUpper = EmptyStr) then
+          Dict.Add(fFile.Names[position].ToUpper, fFile.Values[fFile.Names[position]]);
        end;
     finally
       FreeAndNil(fFile)
@@ -52,29 +59,37 @@ begin
   end;
 end;
 
-class function TDotEnv4Delphi.GetVar(const name: string; fromDotEnvFile: Boolean): string;
+class function TDotEnv4Delphi.Env(const name: string; fromDotEnvFile: Boolean): string;
 begin
   if fromDotEnvFile then
    begin
      Result := ReadValueFromEnvFile(name);
-   end
-  else
-   Result := GetEnvironmentVariable(name);
+     Exit;
+   end;
+
+  Result := GetEnvironmentVariable(name);
+
+  if Result = EmptyStr then
+   Result := ReadValueFromEnvFile(name);
 end;
 
-class function TDotEnv4Delphi.GetVar(const EnvVar: TEnvVar; fromDotEnvFile: Boolean): string;
+class function TDotEnv4Delphi.Env(const EnvVar: TEnvVar; fromDotEnvFile: Boolean): string;
 begin
   if fromDotEnvFile then
    begin
+     Result := ReadValueFromEnvFile(GetEnumName(TypeInfo(TEnvVar), integer(EnvVar)));
+     Exit;
+   end;
 
-   end
-  else
-   Result := GetEnvironmentVariable(GetEnumName(TypeInfo(TEnvVar), integer(EnvVar)));
+  Result := GetEnvironmentVariable(GetEnumName(TypeInfo(TEnvVar), integer(EnvVar)));
+
+  if Result = EmptyStr then
+   Result := ReadValueFromEnvFile(GetEnumName(TypeInfo(TEnvVar), integer(EnvVar)));
 end;
 
 class function TDotEnv4Delphi.GetVersion: string;
 begin
-  Result := '0.0.1-a';
+  Result := '0.0.2-a';
 end;
 
 end.

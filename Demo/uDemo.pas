@@ -32,16 +32,19 @@ uses
 procedure TForm2.Button1Click(Sender: TObject);
 begin
    //Pegando váriáveis do Ambiente diretamente pelo nome(string)
-   Memo1.Lines.Add(tdotEnv4Delphi.GetVar('appdata'));
+   Memo1.Lines.Add(DotEnv.Env('appdata'));
 
    //Pegando variáveis do Ambiente através de Enumerado
-   Memo1.Lines.Add(TDotEnv4Delphi.GetVar(tenvVar.ALLUSERSPROFILE));
+   Memo1.Lines.Add(DotEnv.Env(tenvVar.ALLUSERSPROFILE));
+
+   Memo1.Lines.Add(DotEnv.Env('MeuNome'));
 end;
 
 procedure TForm2.Button2Click(Sender: TObject);
 begin
   //Pegando variáveis do arquivo .env
-  Memo1.Lines.Add(TDotEnv4Delphi.GetVar('MeuNome', true));
+  Memo1.Lines.Add(DotEnv.Env('MeuNome', true));
+  Memo1.Lines.Add(DotEnv.Env(DB_USERNAME));
 end;
 
 end.
