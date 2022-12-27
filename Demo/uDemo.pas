@@ -30,6 +30,8 @@ uses
 {$R *.dfm}
 
 procedure TForm2.Button1Click(Sender: TObject);
+var teste: string;
+    teste2: char;
 begin
    //Pegando váriáveis do Ambiente diretamente pelo nome(string)
    Memo1.Lines.Add(DotEnv.Env('appdata'));
@@ -43,8 +45,13 @@ end;
 procedure TForm2.Button2Click(Sender: TObject);
 begin
   //Pegando variáveis do arquivo .env
-  Memo1.Lines.Add(DotEnv.Env('MeuNome', true));
-  Memo1.Lines.Add(DotEnv.Env(DB_USERNAME));
+  Memo1.Lines.Add(DotEnv.Env('MeuNome')); //Usando o nome da variável
+  Memo1.Lines.Add(DotEnv.Env(DB_USERNAME)); //Usando o enumerado default (procura dentro do arquivo se há uma variável com o nome
+  Memo1.Lines.Add(DotEnv.Env('Nome3'));
+
+  //Forma de Definir caminho do arquivo
+  //DotEnv.Config('D:\Meus Projetos\DotEnv4Delphi\Demo\Win32\Debug\.env');
+  //Memo1.Lines.Add(DotEnv.Env('MeuNome'));
 end;
 
 end.
