@@ -28,10 +28,10 @@ DotEnv4Delphi is a library to use **.env** files in Delphi/Lazarus. You can also
 - [Using the library](#using-the-library)
    - [Adding the Unit](#adding-the-unit)
    - [Getting Environment Variables from OS](#getting-environment-variables-from-OS)
-   - [Getting variable values from .Env files](#getting-variable-values-from-.env-files)
-     - [About .Env files](#about-.env-files)
-     - [Setting a different path to .Env file](#setting-a-different-path-to-.env-file)
-     - [Setting to only read values from .Env file](#setting-to-only-read-values0from-.env-file)
+   - [Getting variable values from .Env files](#getting-variable-values-from-env-files)
+     - [About .Env files](#about-env-files)
+     - [Setting a different path to .Env file](#setting-a-different-path-to-env-file)
+     - [Setting to only read values from .Env file](#setting-to-only-read-values0from-env-file)
 - [Compatibility](#compatibility)
 - [Version](#version) 
 
@@ -53,9 +53,9 @@ Another way is to use the package manager [Boss](https://github.com/HashLoad/bos
 
   ## Getting Environment Variables from OS
 
-  If you want to get the value of an environment variable like **APPDATA** (you get the path of app data), you can do it by using the function ``` **GetEnvironmentVariable('APPDATA')** ``` or, by using the DotEnv4Delphi, you can do it in the same way you're going to get it from a **.env** file:
+  If you want to get the value of an environment variable like **APPDATA** (you get the path of app data), you can do it by using the function ``` GetEnvironmentVariable('APPDATA') ``` or, by using the DotEnv4Delphi, you can do it in the same way you're going to get it from a **.env** file:
 
-  ```Delphi
+  ``` pascal 
   Memo1.Lines.Add(DotEnv.Env('appdata'));
   ```
 
@@ -63,13 +63,13 @@ Another way is to use the package manager [Boss](https://github.com/HashLoad/bos
 
   You can also take advantage from the TEnvVar Enum from DotEnv4Delphi unit. There are all system Environment variables and some extra that are commonly used in .env files from JavaScript examples. See how easy it is to get the value:
 
-  ```Delphi
+  ``` pascal
   Memo1.Lines.Add(DotEnv.Env(tenvVar.ALLUSERSPROFILE));
   ```  
 
   or
 
-  ```Delphi
+  ``` pascal
   Memo1.Lines.Add(DotEnv.Env(ALLUSERSPROFILE));
   ```    
 
@@ -77,7 +77,7 @@ Another way is to use the package manager [Boss](https://github.com/HashLoad/bos
   
   Getting values from variables from a **.Env File** is a piece of cake. You only have to do the same you learned from getting a system variable. 
 
-  ```Delphi
+  ``` pascal
   Memo1.Lines.Add(DotEnv.Env('MeuNome'));
   ```  
 
@@ -104,7 +104,7 @@ Another way is to use the package manager [Boss](https://github.com/HashLoad/bos
 
   #### Values
 
-  Values are to the right of the equals sign. They may be quoted. Using single quotes will prevent variables from being interpolated.
+  Values are to the right of the equals sign. They may be quoted. Using single or double quotes will prevent variables from being interpolated.
 
   ```batch
   SIMPLE=xyz123
@@ -146,8 +146,10 @@ Another way is to use the package manager [Boss](https://github.com/HashLoad/bos
 
   A good thing about .env files is that you don't (and you mustn't) send them to your github repo. To do it, include the following line in the .gitignore:
 
-  ``` # DotEnv environment variables during Development ```
-  ``` .env ```
+  ```
+  # DotEnv environment variables during Development
+  .env
+  ```
 
   Warning: If your .env is already part of your Git repository, adding it to .gitignore will not remove it. In this case, you’ll also need to tell Git to stop tracking .env.
 
