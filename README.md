@@ -201,4 +201,4 @@ Another way is to use the package manager [Boss](https://github.com/HashLoad/bos
 
   # Version
 
-  **[DotEnv4Delphi version 1.0.0](/../../releases/latest)**
+  **[DotEnv4Delphi version 1.1.0](/../../releases/latest)**
