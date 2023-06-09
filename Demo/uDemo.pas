@@ -11,8 +11,17 @@ type
     Button1: TButton;
     Memo1: TMemo;
     Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Label1: TLabel;
+    Label2: TLabel;
+    LAmbiente: TLabel;
+    LVersion: TLabel;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -52,6 +61,26 @@ begin
   //Forma de Definir caminho do arquivo
   //DotEnv.Config('D:\Meus Projetos\DotEnv4Delphi\Demo\Win32\Debug\.env');
   //Memo1.Lines.Add(DotEnv.Env('MeuNome'));
+end;
+
+procedure TForm2.Button3Click(Sender: TObject);
+begin
+  //Outro exemplo de variável direta, neste caso útil para determinar que o ambiente é ou não de desenvolvimento
+  if DotEnv.Development then
+   LAmbiente.Caption := 'Desenvolvimento'
+  else
+   LAmbiente.Caption := 'Produção';
+end;
+
+procedure TForm2.Button4Click(Sender: TObject);
+begin
+  //Exemplo de nova forma de obter alguns tipos de variáveis diretamente, sem precisatr do comando env
+  Memo1.Lines.Add('Porta: ' + DotEnv.Port.ToString);
+end;
+
+procedure TForm2.FormCreate(Sender: TObject);
+begin
+  LVersion.Caption := DotEnv.GetVersion;
 end;
 
 end.
