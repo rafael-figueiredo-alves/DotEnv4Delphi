@@ -1,0 +1,9 @@
+{
+	"name": "DotEnv4Delphi",
+	"description": "A library to use .env files in Delphi. Also to be able to use Environment variables in a simpler way",
+	"version": "1.1.0",
+	"homepage": "https://github.com/rafael-figueiredo-alves/DotEnv4Delphi",
+	"mainsrc": "./src",
+	"projects": [],
+	"dependencies": {}
+}
