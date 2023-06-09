@@ -10,10 +10,25 @@
 
 #
 
-DotEnv4Delphi is a library to use **.env** files in Delphi/Lazarus. You can also get Environment Variables in a very easy and fast way.
-
 ## About
 
+DotEnv4Delphi is a library to use **.env** files in Delphi/Lazarus. You can also get Environment Variables in a very easy and fast way.
+
+## Latest version - New features
+
+DotEnv4Delphi's latest version is **1.1.0**
+
+New features implemented:
+- Implemented access to a variable you can define called Development (a boolean variable) to tell the app it is a Development environment or production
+- Implemented direct access to some variables:
+  - Port
+  - Hostname
+  - Password
+  - DbPassword
+  - DbHost
+  - Token
+  - BaseURL
+  - ConnectionString 
 
 ## Features
 
