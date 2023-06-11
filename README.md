@@ -16,10 +16,10 @@ DotEnv4Delphi is a library to use **.env** files in Delphi/Lazarus. You can also
 
 ## Latest version - New features
 
-DotEnv4Delphi's latest version is **1.1.0**
+DotEnv4Delphi's latest version is **1.2.0**
 
 New features implemented:
-- Implemented access to a variable you can define called Development (a boolean variable) to tell the app it is a Development environment or production
+- Implemented access to a variable you can define called Development (a boolean variable) to tell the app it is a Development environment or production (using isDevelopment function)
 - Implemented direct access to some variables:
   - Port
   - Hostname
@@ -28,7 +28,9 @@ New features implemented:
   - DbHost
   - Token
   - BaseURL
-  - ConnectionString 
+  - ConnectionString
+  - Database_URL
+  - Secret_Key 
 
 ## Features
 
@@ -201,4 +203,4 @@ Another way is to use the package manager [Boss](https://github.com/HashLoad/bos
 
   # Version
 
-  **[DotEnv4Delphi version 1.1.0](/../../releases/latest)**
+  **[DotEnv4Delphi version 1.2.0](/../../releases/latest)**
