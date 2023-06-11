@@ -65,8 +65,8 @@ end;
 
 procedure TForm2.Button3Click(Sender: TObject);
 begin
-  //Outro exemplo de variável direta, neste caso útil para determinar que o ambiente é ou não de desenvolvimento
-  if DotEnv.Development then
+  //Outro exemplo de variável direta, neste caso útil para determinar que o ambiente é ou não de desenvolvimento (variável é DEVELOPMENT com valores "True" ou "False")
+  if DotEnv.isDevelopment then
    LAmbiente.Caption := 'Desenvolvimento'
   else
    LAmbiente.Caption := 'Produção';

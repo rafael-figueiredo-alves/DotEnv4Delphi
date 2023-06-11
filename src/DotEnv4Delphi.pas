@@ -10,7 +10,7 @@ type
              NUMBER_OF_PROCESSORS, OS, PATH, PATHEXT, PROCESSOR_ARCHITECTURE, PROCESSOR_IDENTIFIER, PROCESSOR_LEVEL,
              PROCESSOR_REVISION, PROGRAMFILES, SESSIONNAME, SYSTEMDRIVE, SYSTEMROOT, TEMP, TMP, USERDOMAIN, USERNAME, USERPROFILE,
              WINDIR, DB_USERNAME, DBUSERNAME, DBPORT, DB_PORT, PORT, HOSTNAME, DB_HOST, DB_USER, DBHOST, DBUSER, DBPASS, DB_PASS,
-             PASSWORD, DBPASSWORD, BASE_URL, TOKEN, API_TOKEN, CONNECTIONSTRING, DEVELOPMENT);
+             PASSWORD, DBPASSWORD, BASE_URL, TOKEN, API_TOKEN, CONNECTIONSTRING, DEVELOPMENT, DATABASE_URL, SECRET_KEY);
 {$EndRegion}
 
 {$Region 'DotEnv4Delphi´s interface'}
@@ -28,7 +28,9 @@ type
     function DBHost: string;
     function DBPassword: string;
     function ConnectionString: string;
-    function Development: Boolean;
+    function isDevelopment: Boolean;
+    function DatabaseURL: string;
+    function SecretKey: string;
     function GetVersion: string;
   end;
 {$EndRegion}
@@ -58,13 +60,18 @@ type
      function DBHost: string;
      function DBPassword: string;
      function ConnectionString: string;
-     function Development: Boolean;
+     function isDevelopment: Boolean;
+     function DatabaseURL: string;
+     function SecretKey: string;
      function GetVersion: string;
   end;
 {$EndRegion}
 
 var
  DotEnv: iDotEnv4Delphi;
+
+const
+ fVersion = '1.2.0';
 
 implementation
 
@@ -78,6 +85,24 @@ uses
 function TDotEnv4Delphi.ReadValueFromEnvFile(const key: string): string;
 begin
   EnvDict.TryGetValue(key.ToUpper, Result);
+end;
+
+function TDotEnv4Delphi.SecretKey: string;
+var
+  fSecret: string;
+begin
+  fSecret := Env('SECRET_KEY');
+
+  if fSecret = EmptyStr then
+   fSecret := Env('Secret_Key');
+
+  if fSecret = EmptyStr then
+   fSecret := Env('SecretKey');
+
+  if fSecret = EmptyStr then
+   fSecret := Env('SECRETKEY');
+
+  Result := fSecret;
 end;
 
 function TDotEnv4Delphi.Token: string;
@@ -154,6 +179,24 @@ begin
   ReadEnvFile;
 end;
 
+function TDotEnv4Delphi.DatabaseURL: string;
+var
+  fDBURL: string;
+begin
+  fDBURL := Env('DATABASE_URL');
+
+  if fDBURL = EmptyStr then
+   fDBURL := Env('Database_URL');
+
+  if fDBURL = EmptyStr then
+   fDBURL := Env('DatabaseURL');
+
+  if fDBURL = EmptyStr then
+   fDBURL := Env('Database_URL');
+
+  Result := fDBURL;
+end;
+
 function TDotEnv4Delphi.DBHost: string;
 var
   db_host: string;
@@ -196,7 +239,7 @@ begin
   inherited;
 end;
 
-function TDotEnv4Delphi.Development: Boolean;
+function TDotEnv4Delphi.isDevelopment: Boolean;
 var
  Dev: string;
 begin
@@ -218,7 +261,7 @@ end;
 
 function TDotEnv4Delphi.GetVersion: string;
 begin
-  Result := '1.1.0';
+  Result := fVersion;
 end;
 
 function TDotEnv4Delphi.Hostname: string;
