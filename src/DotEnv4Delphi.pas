@@ -12,66 +12,115 @@ type
              WINDIR, DB_USERNAME, DBUSERNAME, DBPORT, DB_PORT, PORT, HOSTNAME, DB_HOST, DB_USER, DBHOST, DBUSER, DBPASS, DB_PASS,
              PASSWORD, DBPASSWORD, BASE_URL, TOKEN, API_TOKEN, CONNECTIONSTRING, DEVELOPMENT, DATABASE_URL, SECRET_KEY);
 {$EndRegion}
-
+//--------------------------------------------------------------------------------------------------------------------------
 {$Region 'DotEnv4Delphi´s interface'}
   iDotEnv4Delphi = interface
     ['{3BF1532F-91B1-4C1F-A40A-CD81F8754451}']
+    //Main methods
     function Config(const OnlyFromEnvFile: Boolean = False): iDotEnv4Delphi; overload;
     function Config(const path: string = ''; OnlyFromEnvFile: Boolean = False): iDotEnv4Delphi; overload;
     function Env(const name: string): string; overload;
     function Env(const EnvVar: TEnvVar): string; overload;
+    function GetVersion: string;
+
+    //Specific methods to access specific variables
+
+    //To access WebAPI specific variables
+    function BaseUrl: string;
+    function SecretKey: string;
     function Port: integer;
     function Token: string;
-    function Password: string;
-    function BaseUrl: string;
+
+    //To access Database Connection specific variables
     function Hostname: string;
     function DBHost: string;
+    function DBPort: integer;
     function DBPassword: string;
     function ConnectionString: string;
-    function isDevelopment: Boolean;
+    function Password: string;
     function DatabaseURL: string;
-    function SecretKey: string;
-    function GetVersion: string;
+
+    //To access Development specific variables
+    function isDevelopment: Boolean;
+    function ComputerName: string;
+    function ProcessorArchitecture: string;
+    function TEMP_Dir: string;
+    function WindowsDir: string;
+    function AppData: string;
+    function ClientName: string;
+    function CommonProgramFiles: string;
+    function ProgramFiles: String;
+    function OS: string;
+    function AppPath: string;
   end;
 {$EndRegion}
-
+//--------------------------------------------------------------------------------------------------------------------------
 {$Region 'DotEnv4Delphi´s class declaration'}
   TDotEnv4Delphi = class(TInterfacedObject, iDotEnv4Delphi)
     private
      class var FInstance: iDotEnv4Delphi;
+
+     //Variables to manage the class
      fromDotEnvFile: Boolean;
      EnvPath:        string;
      EnvDict:        TDictionary<string, string>;
+
+     //Methods to make the class work
      procedure ReadEnvFile;
      function ReadValueFromEnvFile(const key: string): string;
     public
+     //Constructors and Destructors
      constructor Create;
      Destructor Destroy; override;
      class function New: iDotEnv4Delphi;
+
+     //Main methods
      function Config(const OnlyFromEnvFile: Boolean = False): iDotEnv4Delphi; overload;
      function Config(const path: string = ''; OnlyFromEnvFile: Boolean = False): iDotEnv4Delphi; overload;
      function Env(const name: string): string; overload;
      function Env(const EnvVar: TEnvVar): string; overload;
+     function GetVersion: string;
+
+     //Specific methods to access specific variables
+
+     //To access WebAPI specific variables
+     function BaseUrl: string;
+     function SecretKey: string;
      function Port: integer;
      function Token: string;
-     function Password: string;
-     function BaseUrl: string;
+
+     //To access Database Connection specific variables
      function Hostname: string;
      function DBHost: string;
+     function DBPort: integer;
      function DBPassword: string;
      function ConnectionString: string;
-     function isDevelopment: Boolean;
      function DatabaseURL: string;
-     function SecretKey: string;
-     function GetVersion: string;
+     function Password: string;
+
+     //To access Development specific variables
+     function isDevelopment: Boolean;
+     function ComputerName: string;
+     function ProcessorArchitecture: string;
+     function TEMP_Dir: string;
+     function WindowsDir: string;
+     function AppData: string;
+     function ClientName: string;
+     function CommonProgramFiles: string;
+     function ProgramFiles: String;
+     function OS: string;
+     function AppPath: string;     
   end;
 {$EndRegion}
+//--------------------------------------------------------------------------------------------------------------------------
 
+//--------------------------------------------------------------------------------------------------------------------------
 var
  DotEnv: iDotEnv4Delphi;
-
+ 
 const
- fVersion = '1.2.0';
+ fVersion = '1.3.0';  //Const to manage versioning
+//-------------------------------------------------------------------------------------------------------------------------- 
 
 implementation
 
@@ -82,95 +131,7 @@ uses
 
 { TDotEnv4Delphi }
 
-function TDotEnv4Delphi.ReadValueFromEnvFile(const key: string): string;
-begin
-  EnvDict.TryGetValue(key.ToUpper, Result);
-end;
-
-function TDotEnv4Delphi.SecretKey: string;
-var
-  fSecret: string;
-begin
-  fSecret := Env('SECRET_KEY');
-
-  if fSecret = EmptyStr then
-   fSecret := Env('Secret_Key');
-
-  if fSecret = EmptyStr then
-   fSecret := Env('SecretKey');
-
-  if fSecret = EmptyStr then
-   fSecret := Env('SECRETKEY');
-
-  Result := fSecret;
-end;
-
-function TDotEnv4Delphi.Token: string;
-begin
-  Result := Env('TOKEN');
-end;
-
-function TDotEnv4Delphi.Env(const name: string): string;
-begin
-  if fromDotEnvFile then
-   begin
-     Result := ReadValueFromEnvFile(name);
-     Exit;
-   end;
-
-  Result := GetEnvironmentVariable(name);
-
-  if Result = EmptyStr then
-   Result := ReadValueFromEnvFile(name);
-end;
-
-function TDotEnv4Delphi.Config(const OnlyFromEnvFile: Boolean): iDotEnv4Delphi;
-begin
-  Result := Self;
-  fromDotEnvFile := OnlyFromEnvFile;
-end;
-
-function TDotEnv4Delphi.BaseUrl: string;
-var
- Base: string;
-begin
-  Base := Env('BASE_URL');
-
-  if Base = EmptyStr then
-   Base := Env('BASEURL');
-
-  Result := Base;
-end;
-
-function TDotEnv4Delphi.Config(const path: string; OnlyFromEnvFile: Boolean): iDotEnv4Delphi;
-begin
-  Result := Self;
-  fromDotEnvFile := OnlyFromEnvFile;
-  if (path <> EmptyStr) and (path <> EnvPath) then
-   begin
-    EnvPath := path;
-    ReadEnvFile;
-   end;
-end;
-
-function TDotEnv4Delphi.ConnectionString: string;
-var
-  ConnStr: string;
-begin
-  ConnStr := Env('ConnectionString');
-
-  if ConnStr = EmptyStr then
-   ConnStr := Env('CONNECTIONSTRING');
-
-  if ConnStr = EmptyStr then
-   ConnStr := Env('Connection_String');
-
-  if ConnStr = EmptyStr then
-   ConnStr := Env('CONNECTION_STRING');
-
-  Result := ConnStr;
-end;
-
+{$REGION 'Constructor and Destructor'}
 constructor TDotEnv4Delphi.Create;
 begin
   EnvDict := TDictionary<string, string>.create;
@@ -179,109 +140,7 @@ begin
   ReadEnvFile;
 end;
 
-function TDotEnv4Delphi.DatabaseURL: string;
-var
-  fDBURL: string;
-begin
-  fDBURL := Env('DATABASE_URL');
-
-  if fDBURL = EmptyStr then
-   fDBURL := Env('Database_URL');
-
-  if fDBURL = EmptyStr then
-   fDBURL := Env('DatabaseURL');
-
-  if fDBURL = EmptyStr then
-   fDBURL := Env('Database_URL');
-
-  Result := fDBURL;
-end;
-
-function TDotEnv4Delphi.DBHost: string;
-var
-  db_host: string;
-begin
-  db_host := Env('DBHOST');
-
-  if db_host = EmptyStr then
-   db_host := Env('DB_HOST');
-
-  if db_host = EmptyStr then
-   db_host := Env('DB_Host');
-
-  if db_host = EmptyStr then
-   db_host := Env('DbHost');
-
-  Result := db_host;
-end;
-
-function TDotEnv4Delphi.DBPassword: string;
-var
-  Pass: string;
-begin
-  Pass := Env('DBPassword');
-
-  if Pass = EmptyStr then
-   Pass := Env('DB_Password');
-
-  if Pass = EmptyStr then
-   Pass := Env('DB_PASSWORD');
-
-  if Pass = EmptyStr then
-   Pass := Env('DBPASSWORD');
-
-  Result := Pass;
-end;
-
-destructor TDotEnv4Delphi.Destroy;
-begin
-  FreeAndNil(EnvDict);
-  inherited;
-end;
-
-function TDotEnv4Delphi.isDevelopment: Boolean;
-var
- Dev: string;
-begin
-  Result := false;
-
-  Dev := Env('Development');
-
-  if Dev = EmptyStr then
-   Dev := Env('DEVELOPMENT');
-
-  if (Dev <> EmptyStr) and (Dev.ToUpper = 'TRUE')  then
-   Result := True;
-end;
-
-function TDotEnv4Delphi.Env(const EnvVar: TEnvVar): string;
-begin
-  Result := Env(GetEnumName(TypeInfo(TEnvVar), integer(EnvVar)));
-end;
-
-function TDotEnv4Delphi.GetVersion: string;
-begin
-  Result := fVersion;
-end;
-
-function TDotEnv4Delphi.Hostname: string;
-var
-  _host: string;
-begin
-  _host := Env('Hostname');
-
-  if _host = EmptyStr then
-   _host := Env('HOSTNAME');
-
-  if _host = EmptyStr then
-   _host := Env('Host_Name');
-
-  if _host = EmptyStr then
-   _host := Env('HOST_NAME');
-
-  Result := _host;
-end;
-
+//Method to instantiate the class in a Singleton pattern way
 class function TDotEnv4Delphi.New: iDotEnv4Delphi;
 begin
   if not Assigned(FInstance) then
@@ -290,31 +149,17 @@ begin
   Result := FInstance;
 end;
 
-function TDotEnv4Delphi.Password: string;
-var
-  _pass: string;
+destructor TDotEnv4Delphi.Destroy;
 begin
-  _pass := Env('Password');
-
-  if _pass = EmptyStr then
-   _pass := Env('PASSWORD');
-
-  Result := _pass;
+  FreeAndNil(EnvDict);
+  inherited;
 end;
-
-function TDotEnv4Delphi.Port: integer;
-var
-  _port: string;
+{$ENDREGION}
+//--------------------------------------------------------------------------------------------------------------------------
+{$REGION 'Internal Methods to make the class work'}
+function TDotEnv4Delphi.ReadValueFromEnvFile(const key: string): string;
 begin
-  Result := 0;
-
-  _port := Env('Port');
-
-  if _Port = EmptyStr then
-   _port := Env('PORT');
-
-  if _Port <> EmptyStr then
-   Result := StrToInt(_Port);
+  EnvDict.TryGetValue(key.ToUpper, Result);
 end;
 
 procedure TDotEnv4Delphi.ReadEnvFile;
@@ -391,7 +236,6 @@ procedure TDotEnv4Delphi.ReadEnvFile;
   procedure PopulateDictionary(const Dict: TDictionary<string, string>);
   var
     fFile    : tstringlist;
-    EnvFile  : string;
     position : Integer;
   begin
     fFile := TStringList.Create;
@@ -415,10 +259,376 @@ begin
      PopulateDictionary(EnvDict);
    end;
 end;
+{$ENDREGION}
+//--------------------------------------------------------------------------------------------------------------------------
+{$REGION 'Main methods of DotEnv4Delphi Class'}
+/// <summary>
+///   Use this method to get the value of the variable you inform in the "name" parameter from either Environment or DotEnv file
+/// </summary>
+/// <param name="name">The name of the variable you want to get its value</param>
+function TDotEnv4Delphi.Env(const name: string): string;
+begin
+  if fromDotEnvFile then
+   begin
+     Result := ReadValueFromEnvFile(name);
+     Exit;
+   end;
+
+  Result := GetEnvironmentVariable(name);
+
+  if Result = EmptyStr then
+   Result := ReadValueFromEnvFile(name);
+end;
+
+/// <summary>
+///   Use this method to get the value of the variable you inform in the "EnvVar" parameter from either Environment or DotEnv file
+/// </summary>
+/// <param name="EnvVar">The Enum name of the variable you want to get its value</param>
+function TDotEnv4Delphi.Env(const EnvVar: TEnvVar): string;
+begin
+  Result := Env(GetEnumName(TypeInfo(TEnvVar), integer(EnvVar)));
+end;
+
+/// <summary>
+///   Use this method to get the version of DotEnv4Delphi
+/// </summary>
+function TDotEnv4Delphi.GetVersion: string;
+begin
+  Result := fVersion;
+end;
+
+/// <summary>
+///   Use this method to set some specific configurations. The first could be if you only want to read values from a DotEnv file
+/// </summary>
+/// <param name="OnlyFromEnvFile">Set it to True to only use variables declared in the DotEnv file</param>
+function TDotEnv4Delphi.Config(const OnlyFromEnvFile: Boolean): iDotEnv4Delphi;
+begin
+  Result := Self;
+  fromDotEnvFile := OnlyFromEnvFile;
+end;
+
+/// <summary>
+///   Use this method to set some specific configurations. The first could be if you only want to read values from a DotEnv file and you can specify a path to the DotEnv file
+/// </summary>
+/// <param name="path">Set the path of the DotEnv file you want to use</param>
+/// <param name="OnlyFromEnvFile">Set it to True to only use variables declared in the DotEnv file</param>
+function TDotEnv4Delphi.Config(const path: string; OnlyFromEnvFile: Boolean): iDotEnv4Delphi;
+begin
+  Result := Self;
+  fromDotEnvFile := OnlyFromEnvFile;
+  if (path <> EmptyStr) and (path <> EnvPath) then
+   begin
+    EnvPath := path;
+    ReadEnvFile;
+   end;
+end;
+{$ENDREGION}
+//--------------------------------------------------------------------------------------------------------------------------
+{$REGION 'Methods to help development'}
+/// <summary>
+///   Gets the variable value and returns True if the environment is set to Development
+/// </summary>
+function TDotEnv4Delphi.isDevelopment: Boolean;
+var
+ Dev: string;
+begin
+  Result := false;
+
+  Dev := Env('Development');
+
+  if Dev = EmptyStr then
+   Dev := Env('DEVELOPMENT');
+
+  if (Dev <> EmptyStr) and (Dev.ToUpper = 'TRUE')  then
+   Result := True;
+end;
+
+/// <summary>
+///   Gets the variable value and returns the Operating System
+/// </summary>
+function TDotEnv4Delphi.OS: string;
+begin
+  Result := Env(TEnvVar.OS);
+end;
+
+/// <summary>
+///   Gets the variable value and returns the Name of Client machine.
+/// </summary>
+function TDotEnv4Delphi.ClientName: string;
+begin
+  Result := Env(TEnvVar.CLIENTNAME);
+end;
+
+/// <summary>
+///   Gets the variable value and returns the Path of common program files folder.
+/// </summary>
+function TDotEnv4Delphi.CommonProgramFiles: string;
+begin
+  Result := Env(TEnvVar.COMMONPROGRAMFILES);
+end;
+
+/// <summary>
+///   Gets the variable value and returns the Name of Computer code is running on.
+/// </summary>
+function TDotEnv4Delphi.ComputerName: string;
+begin
+  Result := Env(TEnvVar.COMPUTERNAME);
+end;
+
+/// <summary>
+///   Gets the variable value and returns the Type of CPU architecture. For example, X86 for Intel Pentium processors.
+/// </summary>
+function TDotEnv4Delphi.ProcessorArchitecture: string;
+begin
+  Result := Env(TEnvVar.PROCESSOR_ARCHITECTURE);
+end;
+
+/// <summary>
+///   Gets the variable value and returns the Path of the program files folder.
+/// </summary>
+function TDotEnv4Delphi.ProgramFiles: String;
+begin
+  Result := Env(TEnvVar.PROGRAMFILES);
+end;
+
+/// <summary>
+///   Gets the variable value and returns the Path of the Windows folder.
+/// </summary>
+function TDotEnv4Delphi.WindowsDir: string;
+begin
+  Result := Env(TEnvVar.WINDIR);
+end;
+
+/// <summary>
+///   Gets the variable value and returns the Path of the temporary files folder.
+/// </summary>
+function TDotEnv4Delphi.TEMP_Dir: string;
+begin
+  Result := Env(TEnvVar.TEMP);
+end;
+
+/// <summary>
+///   Gets the variable value and returns the Path of the application data folder.
+/// </summary>
+function TDotEnv4Delphi.AppData: string;
+begin
+  Result := Env(TEnvVar.APPDATA);
+end;
+
+function TDotEnv4Delphi.AppPath: string;
+begin
+  Result := ExtractFileDir(ParamStr(0));
+end;
+{$ENDREGION}
+//--------------------------------------------------------------------------------------------------------------------------
+{$REGION 'Methods to access variables for a WebAPI'}
+/// <summary>
+///   Read the variable and fill the BaseUrl of the webAPI
+/// </summary>
+function TDotEnv4Delphi.BaseUrl: string;
+var
+ Base: string;
+begin
+  Base := Env('BASE_URL');
+
+  if Base = EmptyStr then
+   Base := Env('BASEURL');
+
+  Result := Base;
+end;
+
+/// <summary>
+///   Read the variable and fill the Secret Key of the webAPI
+/// </summary>
+function TDotEnv4Delphi.SecretKey: string;
+var
+  fSecret: string;
+begin
+  fSecret := Env('SECRET_KEY');
+
+  if fSecret = EmptyStr then
+   fSecret := Env('Secret_Key');
+
+  if fSecret = EmptyStr then
+   fSecret := Env('SecretKey');
+
+  if fSecret = EmptyStr then
+   fSecret := Env('SECRETKEY');
+
+  Result := fSecret;
+end;
+
+/// <summary>
+///   Read the variable and fill the Port of the webAPI
+/// </summary>
+function TDotEnv4Delphi.Port: integer;
+var
+  _port: string;
+begin
+  Result := 0;
+
+  _port := Env('Port');
+
+  if _Port = EmptyStr then
+   _port := Env('PORT');
+
+  if _Port <> EmptyStr then
+   Result := StrToInt(_Port);
+end;
+
+/// <summary>
+///   Read the variable and fill the Token of the webAPI
+/// </summary>
+function TDotEnv4Delphi.Token: string;
+begin
+  Result := Env('TOKEN');
+end;
+{$ENDREGION}
+//--------------------------------------------------------------------------------------------------------------------------
+{$REGION 'Methods to work with Database connections'}
+/// <summary>
+///   Read variable and get the connection string
+/// </summary>
+function TDotEnv4Delphi.ConnectionString: string;
+var
+  ConnStr: string;
+begin
+  ConnStr := Env('ConnectionString');
+
+  if ConnStr = EmptyStr then
+   ConnStr := Env('CONNECTIONSTRING');
+
+  if ConnStr = EmptyStr then
+   ConnStr := Env('Connection_String');
+
+  if ConnStr = EmptyStr then
+   ConnStr := Env('CONNECTION_STRING');
+
+  Result := ConnStr;
+end;
+
+/// <summary>
+///   Read variable and get the Database URL
+/// </summary>
+function TDotEnv4Delphi.DatabaseURL: string;
+var
+  fDBURL: string;
+begin
+  fDBURL := Env('DATABASE_URL');
+
+  if fDBURL = EmptyStr then
+   fDBURL := Env('Database_URL');
+
+  if fDBURL = EmptyStr then
+   fDBURL := Env('DatabaseURL');
+
+  if fDBURL = EmptyStr then
+   fDBURL := Env('Database_URL');
+
+  Result := fDBURL;
+end;
+
+/// <summary>
+///   Read variable and get the DB Host
+/// </summary>
+function TDotEnv4Delphi.DBHost: string;
+var
+  db_host: string;
+begin
+  db_host := Env('DBHOST');
+
+  if db_host = EmptyStr then
+   db_host := Env('DB_HOST');
+
+  if db_host = EmptyStr then
+   db_host := Env('DB_Host');
+
+  if db_host = EmptyStr then
+   db_host := Env('DbHost');
+
+  Result := db_host;
+end;
+
+/// <summary>
+///   Read variable and get the DB Password
+/// </summary>
+function TDotEnv4Delphi.DBPassword: string;
+var
+  Pass: string;
+begin
+  Pass := Env('DBPassword');
+
+  if Pass = EmptyStr then
+   Pass := Env('DB_Password');
+
+  if Pass = EmptyStr then
+   Pass := Env('DB_PASSWORD');
+
+  if Pass = EmptyStr then
+   Pass := Env('DBPASSWORD');
+
+  Result := Pass;
+end;
+
+/// <summary>
+///   Read variable and get the Port to use to access the Database
+/// </summary>
+function TDotEnv4Delphi.DBPort: integer;
+var
+  _port: string;
+begin
+  Result := 0;
+
+  _port := Env('DBPort');
+
+  if _Port = EmptyStr then
+   _port := Env('DBPORT');
+
+  if _Port <> EmptyStr then
+   Result := StrToInt(_Port);
+end;
+
+/// <summary>
+///   Read variable and get the Hostname to connect to the Database
+/// </summary>
+function TDotEnv4Delphi.Hostname: string;
+var
+  _host: string;
+begin
+  _host := Env('Hostname');
+
+  if _host = EmptyStr then
+   _host := Env('HOSTNAME');
+
+  if _host = EmptyStr then
+   _host := Env('Host_Name');
+
+  if _host = EmptyStr then
+   _host := Env('HOST_NAME');
+
+  Result := _host;
+end;
+
+/// <summary>
+///   Read variable and get the Password
+/// </summary>
+function TDotEnv4Delphi.Password: string;
+var
+  _pass: string;
+begin
+  _pass := Env('Password');
+
+  if _pass = EmptyStr then
+   _pass := Env('PASSWORD');
+
+  Result := _pass;
+end;
+{$ENDREGION}
 
 initialization
 
 begin
+  //Here the instance of the DotEnv4Delphi is created to be used in a Sigleton Pattern way
   DotEnv := tDotEnv4Delphi.New;
 end;
 
