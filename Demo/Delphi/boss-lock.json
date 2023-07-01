@@ -1,0 +1,14 @@
+{
+	"hash": "d41d8cd98f00b204e9800998ecf8427e",
+	"updated": "2023-06-29T21:25:00.4514542-03:00",
+	"installedModules": {
+		"https://github.com/rafael-figueiredo-alves/dotenv4delphi": {
+			"name": "dotenv4delphi",
+			"version": "v1.4.0",
+			"hash": "55f3cbe2cbe03e20b930cd2249afef8b",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		}
+	}
+}

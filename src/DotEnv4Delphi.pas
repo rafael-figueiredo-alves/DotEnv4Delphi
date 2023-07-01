@@ -1,8 +1,17 @@
 unit DotEnv4Delphi;
 
+{$IFDEF FPC}
+  {$mode delphi}
+{$ENDIF}
+
 interface
 
-uses System.Generics.Collections;
+uses
+  {$IFDEF FPC}
+    Generics.Collections;
+  {$ELSE}
+    System.Generics.Collections;
+  {$ENDIF}
 
 type
 {$Region 'EnumEnvVars'}
@@ -21,6 +30,8 @@ type
     function Config(const path: string = ''; OnlyFromEnvFile: Boolean = False): iDotEnv4Delphi; overload;
     function Env(const name: string): string; overload;
     function Env(const EnvVar: TEnvVar): string; overload;
+    function EnvOrDefault(const name, default: string): string; overload;
+    function EnvOrDefault(const EnvVar: TEnvVar; default: string): string; overload;
     function GetVersion: string;
 
     //Specific methods to access specific variables
@@ -29,12 +40,14 @@ type
     function BaseUrl: string;
     function SecretKey: string;
     function Port: integer;
+    function PortOrDefault(const default: integer = 0): integer;
     function Token: string;
 
     //To access Database Connection specific variables
     function Hostname: string;
     function DBHost: string;
     function DBPort: integer;
+    function DBPortOrDefault(const default: integer = 0): integer;
     function DBPassword: string;
     function ConnectionString: string;
     function Password: string;
@@ -79,6 +92,8 @@ type
      function Config(const path: string = ''; OnlyFromEnvFile: Boolean = False): iDotEnv4Delphi; overload;
      function Env(const name: string): string; overload;
      function Env(const EnvVar: TEnvVar): string; overload;
+     function EnvOrDefault(const name, default: string): string; overload;
+     function EnvOrDefault(const EnvVar: TEnvVar; default: string): string; overload;
      function GetVersion: string;
 
      //Specific methods to access specific variables
@@ -87,12 +102,14 @@ type
      function BaseUrl: string;
      function SecretKey: string;
      function Port: integer;
+     function PortOrDefault(const default: integer = 0): integer;
      function Token: string;
 
      //To access Database Connection specific variables
      function Hostname: string;
      function DBHost: string;
      function DBPort: integer;
+     function DBPortOrDefault(const default: integer = 0): integer;
      function DBPassword: string;
      function ConnectionString: string;
      function DatabaseURL: string;
@@ -119,15 +136,21 @@ var
  DotEnv: iDotEnv4Delphi;
  
 const
- fVersion = '1.3.0';  //Const to manage versioning
+ fVersion = '1.4.0';  //Const to manage versioning
 //-------------------------------------------------------------------------------------------------------------------------- 
 
 implementation
 
 uses
-  System.SysUtils,
-  System.TypInfo,
-  System.Classes;
+  {$IFDEF FPC}
+    SysUtils,
+    TypInfo,
+    Classes;
+  {$ELSE}
+    System.SysUtils,
+    System.TypInfo,
+    System.Classes;
+  {$ENDIF}
 
 { TDotEnv4Delphi }
 
@@ -287,6 +310,42 @@ end;
 function TDotEnv4Delphi.Env(const EnvVar: TEnvVar): string;
 begin
   Result := Env(GetEnumName(TypeInfo(TEnvVar), integer(EnvVar)));
+end;
+
+/// <summary>
+///   Use this method to get the value of the variable you inform in the "EnvVar" parameter from either Environment or DotEnv file
+///   If it doesn't exist, it'll return the value you pass as Default value
+/// </summary>
+/// <param name="EnvVar">The Enum name of the variable you want to get its value</param>
+/// <param name="Default">The default value you can get if the env var doesn't exist</param>
+function TDotEnv4Delphi.EnvOrDefault(const EnvVar: TEnvVar; default: string): string;
+var
+  Value: string;
+begin
+  Value := Env(EnvVar);
+
+  if Value = EmptyStr then
+   Result := default
+  else
+   Result := Value;
+end;
+
+/// <summary>
+///   Use this method to get the value of the variable you inform in the "name" parameter from either Environment or DotEnv file
+///   If it doesn't exist, it'll return the value you pass as Default value
+/// </summary>
+/// <param name="name">The name of the variable you want to get its value</param>
+/// <param name="Default">The default value you can get if the env var doesn't exist</param>
+function TDotEnv4Delphi.EnvOrDefault(const name, default: string): string;
+var
+  Value: string;
+begin
+  Value := Env(name);
+
+  if Value = EmptyStr then
+   Result := default
+  else
+   Result := Value;
 end;
 
 /// <summary>
@@ -477,6 +536,25 @@ begin
 end;
 
 /// <summary>
+///   Read the variable and fill the Port of the webAPI. If it doesn't exist, it'll be filled with the default value defined in the parameter
+/// </summary>
+/// <param name="default">The default value</param>
+function TDotEnv4Delphi.PortOrDefault(const default: integer): integer;
+var
+  _port: string;
+begin
+  _port := Env('Port');
+
+  if _Port = EmptyStr then
+   _port := Env('PORT');
+
+  if _Port <> EmptyStr then
+   Result := StrToInt(_Port)
+  else
+   Result := default;
+end;
+
+/// <summary>
 ///   Read the variable and fill the Token of the webAPI
 /// </summary>
 function TDotEnv4Delphi.Token: string;
@@ -586,6 +664,25 @@ begin
 
   if _Port <> EmptyStr then
    Result := StrToInt(_Port);
+end;
+
+/// <summary>
+///   Read variable and get the Port to use to access the Database otherwise returns the default value defined
+/// </summary>
+/// <param name="default">The default value</param>
+function TDotEnv4Delphi.DBPortOrDefault(const default: integer = 0): integer;
+var
+  _port: string;
+begin
+  _port := Env('DBPort');
+
+  if _Port = EmptyStr then
+   _port := Env('DBPORT');
+
+  if _Port <> EmptyStr then
+   Result := StrToInt(_Port)
+  else
+   Result := default;
 end;
 
 /// <summary>

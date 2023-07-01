@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe" Date="1449427374"/>
+  <Params Value=" -MObjFPC -Scghi -O1 -gw2 -godwarfsets -gl -WG -l -vewnhibq -FiC:\MeusProjetos\DotEnv4Delphi\Demo\Lazarus\lib\x86_64-win64 -FuC:\MeusProjetos\DotEnv4Delphi\Demo\Lazarus\modules\.dcp -FuC:\MeusProjetos\DotEnv4Delphi\Demo\Lazarus\modules\.dcu -FuC:\MeusProjetos\DotEnv4Delphi\Demo\Lazarus\modules -FuC:\MeusProjetos\DotEnv4Delphi\Demo\Lazarus\modules\dotenv4delphi\src -FuC:\lazarus\lcl\units\x86_64-win64\win32 -FuC:\lazarus\lcl\units\x86_64-win64 -FuC:\lazarus\components\freetype\lib\x86_64-win64 -FuC:\lazarus\components\lazutils\lib\x86_64-win64 -FuC:\lazarus\packager\units\x86_64-win64 -FuC:\MeusProjetos\DotEnv4Delphi\Demo\Lazarus\ -FUC:\MeusProjetos\DotEnv4Delphi\Demo\Lazarus\lib\x86_64-win64\ -FEC:\MeusProjetos\DotEnv4Delphi\Demo\Lazarus\ -oC:\MeusProjetos\DotEnv4Delphi\Demo\Lazarus\demo.exe -dLCL -dLCLwin32 demo.lpr"/>
+</CONFIG>

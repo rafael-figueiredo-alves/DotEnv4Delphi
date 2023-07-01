@@ -76,6 +76,9 @@ procedure TForm2.Button4Click(Sender: TObject);
 begin
   //Exemplo de nova forma de obter alguns tipos de variáveis diretamente, sem precisar do comando env
   Memo1.Lines.Add('Porta: ' + DotEnv.Port.ToString);
+
+  //Comando similar ao anterior, mas com possibilidade de passar um valor padrão caso não seja encontrada a variável
+  Memo1.Lines.Add('Porta (com valor padrão): ' + DotEnv.PortOrDefault(50).ToString);
 end;
 
 procedure TForm2.FormCreate(Sender: TObject);

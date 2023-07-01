@@ -4,6 +4,7 @@
 
 <p>
   <a href="#compatibility"><img src="https://img.shields.io/static/v1?label=rad%20studio&message=xe2%2B&color=silver&style=for-the-badge&logo=delphi&logoColor=white" alt="Delphi XE2+ support" /></a>
+  <a href="#compatibility"><img src="https://img.shields.io/static/v1?label=Lazarus&message=Supported&color=silver&style=for-the-badge&logo=lazarus&logoColor=white" alt="Lazarus support" /></a>  
   <a href="#compatibility"><img src="https://img.shields.io/static/v1?label=platforms&message=cross-platform&color=silver&style=for-the-badge&logo=delphi&logoColor=white" alt="Cross-platform support" /></a>
   <a href="#compatibility"><img src="https://img.shields.io/static/v1?label=applications&message=console%2C%20fmx%2C%20vcl&color=silver&style=for-the-badge&logo=delphi&logoColor=white" alt="Console, FMX, VCL support" /></a>
 </p>
@@ -16,12 +17,22 @@ DotEnv4Delphi is a library to use **.env** files in Delphi/Lazarus. You can also
 
 ## Latest version - New features
 
-DotEnv4Delphi's latest version is **1.3.0**
+DotEnv4Delphi's latest version is **1.4.0**
 
 New features implemented:
-- Removed a variable that isn't been used (thanks to @MateusMPereira);
-- Added some more methods to direct access some variables (related to development);
-- Organized the file to keep things as neat as possible.
+- Support to Lazarus (tested and developed a Simple Demo)
+- Added methods to define a default value if the variable can't be found
+- a new demo using the lib to build a server using horse (you can do something common on NodeJS servers with DotEnv4Delphi now). Take a look:
+  - In JavaScript:
+    ``` javascript
+    app.listen(process.env.PORT || 3000);
+    ```
+  - In Delphi with Horse, you can do this:
+    ``` Delphi
+    THorse.Listen(DotEnv.PortOrDefault(3000));
+    ``` 
+
+More features are coming and new feature requests are welcome on the issues page. 
 
 ## Features
 
@@ -194,4 +205,4 @@ Another way is to use the package manager [Boss](https://github.com/HashLoad/bos
 
   # Version
 
-  **[DotEnv4Delphi version 1.3.0](/../../releases/latest)**
+  **[DotEnv4Delphi version 1.4.0](/../../releases/latest)**

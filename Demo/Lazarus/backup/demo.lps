@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="demo.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="22"/>
+      </Unit>
+      <Unit>
+        <Filename Value="unitmain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="unitMain"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="63"/>
+        <CursorPos X="28" Y="75"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="modules\dotenv4delphi\src\DotEnv4Delphi.pas"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="465"/>
+        <CursorPos X="14" Y="66"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="28">
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="25" Column="20" TopLine="5"/>
+      </Position>
+      <Position>
+        <Filename Value="modules\dotenv4delphi\src\DotEnv4Delphi.pas"/>
+        <Caret Line="7" Column="26"/>
+      </Position>
+      <Position>
+        <Filename Value="modules\dotenv4delphi\src\DotEnv4Delphi.pas"/>
+        <Caret Line="71" Column="33" TopLine="59"/>
+      </Position>
+      <Position>
+        <Filename Value="modules\dotenv4delphi\src\DotEnv4Delphi.pas"/>
+        <Caret Line="5" Column="9"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="25" Column="20" TopLine="5"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="29" Column="20" TopLine="6"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="30" Column="20" TopLine="7"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="39" Column="5" TopLine="16"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="38" Column="43" TopLine="16"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="39" Column="43" TopLine="17"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="43" Column="73" TopLine="28"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="44" Column="73" TopLine="29"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="43" Column="73" TopLine="28"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="44" Column="73" TopLine="29"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="45" Column="73" TopLine="30"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="44" Column="73" TopLine="29"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="45" Column="73" TopLine="30"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="44" Column="73" TopLine="29"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="43" Column="73" TopLine="28"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="45" Column="73" TopLine="24"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="61" Column="54" TopLine="41"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="62" Column="54" TopLine="42"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="63" Column="54" TopLine="43"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="57" TopLine="47"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="72" Column="3" TopLine="58"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="88" Column="47"/>
+      </Position>
+      <Position>
+        <Filename Value="unitmain.pas"/>
+        <Caret Line="87" Column="61" TopLine="66"/>
+      </Position>
+      <Position>
+        <Filename Value="modules\dotenv4delphi\src\DotEnv4Delphi.pas"/>
+        <Caret Line="66" Column="14" TopLine="102"/>
+      </Position>
+      <Position>
+        <Filename Value="modules\dotenv4delphi\src\DotEnv4Delphi.pas"/>
+        <Caret Line="61" Column="14" TopLine="106"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

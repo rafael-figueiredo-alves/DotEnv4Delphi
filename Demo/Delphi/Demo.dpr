@@ -2,8 +2,7 @@ program Demo;
 
 uses
   Vcl.Forms,
-  uDemo in 'uDemo.pas' {Form2},
-  DotEnv4Delphi in '..\src\DotEnv4Delphi.pas';
+  uDemo in 'uDemo.pas' {Form2};
 
 {$R *.res}
 

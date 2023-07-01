@@ -1,0 +1,90 @@
+object FormMain: TFormMain
+  Left = 520
+  Height = 415
+  Top = 277
+  Width = 909
+  BorderIcons = [biSystemMenu, biMinimize]
+  Caption = 'Demo - DotEnv4Delphi - Lazarus'
+  ClientHeight = 415
+  ClientWidth = 909
+  DesignTimePPI = 120
+  OnCreate = FormCreate
+  Position = poDesktopCenter
+  ShowHint = True
+  LCLVersion = '2.2.6.0'
+  object LogVariaveis: TMemo
+    Left = 16
+    Height = 331
+    Top = 48
+    Width = 880
+    ReadOnly = True
+    ScrollBars = ssBoth
+    TabOrder = 0
+  end
+  object lblDotEnv: TLabel
+    Left = 682
+    Height = 20
+    Top = 384
+    Width = 160
+    Caption = 'DotEnv4Delphi - versão:'
+    ParentColor = False
+  end
+  object lblversion: TLabel
+    Left = 852
+    Height = 20
+    Top = 384
+    Width = 44
+    Alignment = taRightJustify
+    AutoSize = False
+    Caption = '1.4.0'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object lblAmbiente: TLabel
+    Left = 16
+    Height = 20
+    Top = 383
+    Width = 68
+    Caption = 'Ambiente:'
+    ParentColor = False
+  end
+  object lbVAmbiente: TLabel
+    Left = 90
+    Height = 20
+    Top = 383
+    Width = 91
+    Caption = 'lbVAmbiente'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object btnGetEnvVarsDefault: TButton
+    Left = 16
+    Height = 31
+    Top = 8
+    Width = 334
+    Caption = 'Pegar valor de Variáveis de Ambiente padrões'
+    OnClick = btnGetEnvVarsDefaultClick
+    TabOrder = 1
+  end
+  object btnGetEnvVarsFromCreatedVars: TButton
+    Left = 358
+    Height = 31
+    Top = 8
+    Width = 338
+    Caption = 'Pegar valor de variáveis de ambiente criadas'
+    OnClick = btnGetEnvVarsFromCreatedVarsClick
+    TabOrder = 2
+  end
+  object chOnlyFromFile: TToggleBox
+    Left = 710
+    Height = 31
+    Hint = 'Se este controle estiver checado, o sistema buscará o valor das variáveis diretamente do arquivo .Env (dotenv)'
+    Top = 8
+    Width = 186
+    Caption = 'Apenas do arquivo .Env'
+    OnChange = chOnlyFromFileChange
+    TabOrder = 3
+  end
+end

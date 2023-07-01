@@ -1,0 +1,22 @@
+{
+	"hash": "d41d8cd98f00b204e9800998ecf8427e",
+	"updated": "2023-06-30T22:00:57.8470623-03:00",
+	"installedModules": {
+		"github.com/hashload/horse": {
+			"name": "horse",
+			"version": "3.1.3",
+			"hash": "752c3b943782e4910cd0a3ac3beeb4ee",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"https://github.com/rafael-figueiredo-alves/dotenv4delphi": {
+			"name": "dotenv4delphi",
+			"version": "v1.4.0",
+			"hash": "55f3cbe2cbe03e20b930cd2249afef8b",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		}
+	}
+}
