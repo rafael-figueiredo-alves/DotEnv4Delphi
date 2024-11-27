@@ -136,7 +136,8 @@ var
  DotEnv: iDotEnv4Delphi;
  
 const
- fVersion = '1.4.0';  //Const to manage versioning
+ fVersion = '1.5.0';  //Const to manage versioning
+ SingleQuote = #39;  //Caracter '
 //-------------------------------------------------------------------------------------------------------------------------- 
 
 implementation
@@ -193,22 +194,24 @@ procedure TDotEnv4Delphi.ReadEnvFile;
    var
     positionOfLastQuote: integer;
    begin
-     if (valor.StartsWith('"')) or (valor.StartsWith(#39)) then
+     if (valor.StartsWith('"')) or (valor.StartsWith(SingleQuote)) then
       begin
         positionOfLastQuote := Pos('"', Copy(valor, 2, length(valor) - 1));
         if positionOfLastQuote = 0 then
-         positionOfLastQuote := Pos(#39, Copy(valor, 2, length(valor) - 1));
+         positionOfLastQuote := Pos(SingleQuote, Copy(valor, 2, length(valor) - 1));
 
         if positionOfLastQuote > 0 then
          begin
-           if Pos('#', valor) > positionOfLastQuote then
-            Result := Copy(valor, 1, Pos('#', valor) - 1);
+           if Pos('# ', valor) > positionOfLastQuote then
+            Result := Copy(valor, 1, Pos('# ', valor) - 2)
+           else
+            Result := valor;
          end;
       end
      else
       begin
-       if Pos('#', valor) > 0 then
-        Result := Copy(valor, 1, Pos('#', valor) - 1)
+       if Pos('# ', valor) > 0 then
+        Result := Copy(valor, 1, Pos('# ', valor) - 2)
        else
         Result := valor;
       end;
@@ -220,7 +223,7 @@ procedure TDotEnv4Delphi.ReadEnvFile;
     chave, ValorChave: string;
    begin
      Result := valor;
-     if (not valor.StartsWith('"')) and (not valor.StartsWith(#39)) then
+     if (not valor.StartsWith('"')) and (not valor.StartsWith(SingleQuote)) then
       begin
         while Pos('${', Result) > 0 do
          begin
@@ -237,16 +240,16 @@ procedure TDotEnv4Delphi.ReadEnvFile;
    var
     positionOfLastQuote: integer;
    begin
-     if (valor.StartsWith('"')) or (valor.StartsWith(#39)) then
+     if (valor.StartsWith('"')) or (valor.StartsWith(SingleQuote)) then
       begin
         positionOfLastQuote := Pos('"', Copy(valor, 2, length(valor) - 1));
         if positionOfLastQuote = 0 then
-         positionOfLastQuote := Pos(#39, Copy(valor, 2, length(valor) - 1));
+         positionOfLastQuote := Pos(SingleQuote, Copy(valor, 2, length(valor) - 1));
 
         if positionOfLastQuote > 0 then
          begin
           Result := StringReplace(valor, '"', '', [rfReplaceAll]);
-          Result := StringReplace(valor, #39, '', [rfReplaceAll]);
+          Result := StringReplace(valor, SingleQuote, '', [rfReplaceAll]);
          end;
       end
      else

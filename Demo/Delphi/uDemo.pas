@@ -57,6 +57,9 @@ begin
   Memo1.Lines.Add(DotEnv.Env('MeuNome')); //Usando o nome da variável
   Memo1.Lines.Add(DotEnv.Env(DB_USERNAME)); //Usando o enumerado default (procura dentro do arquivo se há uma variável com o nome
   Memo1.Lines.Add(DotEnv.Env('Nome3'));
+  Memo1.Lines.Add(DotEnv.Env('DBPASSWORD2'));
+  Memo1.Lines.Add(DotEnv.DBPassword);
+  Memo1.Lines.Add(DotEnv.Env('Teste'));
 
   //Forma de Definir caminho do arquivo
   //DotEnv.Config('D:\Meus Projetos\DotEnv4Delphi\Demo\Win32\Debug\.env');
